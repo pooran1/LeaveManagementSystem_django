@@ -1,0 +1,87 @@
+<!--lode base.html using extend in dtl -->
+
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- nav bhar start-->
+
+<div class="container pt-4">
+    <div class="clo-lg-5 shadow m-4 p-0">
+        <div class="alert alert-success" role="alert">
+            <h2> List View Role</h2>
+
+        </div>
+        <div class="main">
+
+            <div class="col">
+                <div class="border">
+                   
+                    {% if roles|length == 0%}
+                    <div class="p-4">
+                        <br>
+                        <br>
+                        <div class="alert alert-info">
+                            <p class="dispaly-4">NO Roles</p>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                    {% else %}
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Role</th>
+                                    <th>Permission</th>
+                                    <th>Status</th>
+            
+                                    <th>Function</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+        
+        
+                                {% for role in roles%}
+                                <tr>
+                                    <td>{{forloop.counter}} </td>
+                                    <td>{{role.name}} </td>
+                                    <td>{% for p in role.Permission.all %}
+                                        {{p.name}}
+                                        {% endfor %} </td>
+                                    <td>{{role.is_active}} </td>
+        
+                                  
+                                    <td>
+                        <a href="{{ROOT_URL}}/update_role/{{role.id}}" title="Mark Completed " class="">
+                        👤 update role</a>
+                       
+                                    </td>
+                                   
+                                    
+        
+                                </tr>
+                                
+                                {% endfor %}
+        
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif%}
+                </div>
+            </div>
+ 
+            {% for data in dataset %}.
+         
+            {{ data.title }}<br/>
+            {{ data.description }}<br/>
+            <hr/>
+         
+            {% endfor %}
+         
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,139 @@
+<!--lode base.html using extend in dtl -->
+
+{% extends 'base.html'%}
+
+<!-- mark up t-->
+{% block content %}
+<div>
+    <div class="container pt-4">
+        <din class="row p=0 mt-4">
+            <div class="col-lg-4 m-4 shadow p-0 ">
+                <div class="alert alert-info" role="alert">
+                    <h2>Apply leave </h2>
+
+                </div>
+                <div class="p-4">
+
+                    <form method="POST" action="/apply_leave/">
+                        <!-- crsf tokn : Cross-Site Request Forgery (CSRF) is an attack that forces
+                         authenticated users to submit a request to a Web application against
+                          which they are currently authenticated.-->
+                        {% csrf_token %}
+                        <!-- django Templating language mean html ke inder python code use ker na-->
+                        {{ form.as_p }}
+                        <hr>
+                        <input class="btn btn-info" type="submit" , value="ADD">
+                    </form>
+                </div>
+            </div>
+            <!-- length check ker ne ke lia  -->
+            <!-- {{todos|length}} -->
+            <div class="col">
+                <div class="border">
+                    <!-- {{ todos }} -->
+                    <!-- single queryset print -->
+
+
+                    <!-- {% for todo in todos %}
+                    {{ todo.title }}
+                    {% endfor %} -->
+                    <!-- for loop in todo list -->
+                    {% if la|length == 0%}
+                    <div class="p-4">
+                        <br>
+                        <br>
+                        <div class="alert alert-info">
+                            <p class="dispaly-4">NO Leave</p>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                    {% else %}
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>S.date</th>
+                                    <th>E.date</th>
+                                    <th>T.days</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                 
+                                    <th>Action</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                {% for le in la %}
+                                <tr>
+                                    <td>{{forloop.counter}} </td>
+                                    <td>{{le.user.username}} </td>
+                                    <td>{{le.leavetype}} </td>
+                                    <td>{{le.start_date}} </td>
+                                    <td>{{le.end_date}} </td>
+                                    <td>{{le.end_date|timeuntil:le.start_date}}</td>
+                                    <td>{{le.reason}} </td>
+                                    <td>{{le.status}} </td>
+                                    <td> 
+                                        {%for r in roles %}
+                                        {% if r.name == current_user_role %}
+                                        <a class="btn btn-success" href="{{ROOT_URL}}/approve/{{le.id}}" role="button">Approve</a><br><br> 
+                                        <a class="btn btn-danger" href="{{ROOT_URL}}/unapprove/{{le.id}}" role="button">UnApprove</a>
+                                        
+                                        {% endif%}
+                                        {% endfor %}
+                                        {% if show_leave == "yes" %}
+                                        {% if le.status != 'approved' %}
+                                        <a class="btn btn-danger" href="{{ROOT_URL}}/update_appyleave/{{le.id}}" role="button">Update</a>
+                                        {% else %}
+
+                                        {% endif %}
+                                        {% endif %}
+                                        
+                                       
+                                    </td>
+                                    
+                                    <!-- <td> {% if todo.status == 'C'%}
+                                        ☑️
+                                        {% else %}
+
+                                        ⏲️
+                                        {% endif %} </td>
+                                    <td>{{todo.priority}} </td> -->
+                                    <!-- <td>
+
+                                        <a href="delete_todo/{{todo.id}}" title="delete" class="">🗑</a>
+                                        {% if todo.status == 'P'%}
+                                        <a href="change_status/{{todo.id}}/C" title="Mark Completed " class="">
+                                            ☑️</a>
+                                        {% else %}
+                                        <a href="change_status/{{todo.id}}/P" title="Mark pending  " class="">
+
+                                            ⏲️</a>
+                                        {% endif %}
+
+                                    </td> -->
+                                    </td>
+
+
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif%}
+                </div>
+            </div>
+        </din>
+
+    </div>
+</div>
+{% endblock %}
+
+

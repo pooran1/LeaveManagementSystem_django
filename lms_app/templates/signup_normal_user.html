@@ -1,0 +1,32 @@
+<!--lode base.html using extend in dtl -->
+
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- nav bhar start-->
+
+<div class="container pt-4">
+    <div class="clo-lg-5 shadow m-4 p-0">
+        <div class="alert alert-success" role="alert">
+            <h2> Create Account</h2>
+
+        </div>
+
+        <div class="p-4">
+            <form method="POST" action="/signup_view/">
+                <!-- crsf tokn : Cross-Site Request Forgery (CSRF) is an attack that forces
+                         authenticated users to submit a request to a Web application against
+                          which they are currently authenticated.-->
+               
+                <!-- django Templating language mean html ke inder python code use ker na-->
+                {% csrf_token %}
+                {{form | crispy}}
+                <hr>
+                <input class="btn btn-success" type="submit" , value="Create Account">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

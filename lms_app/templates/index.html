@@ -1,0 +1,164 @@
+{% extends 'base.html'%}
+
+
+{% block content %}
+<!-- nav bhar start-->
+
+
+<div class="container pt-4">
+    <div class="clo-lg-5 shadow m-4 p-0">
+        <div class="alert alert-success" role="alert" >
+               
+                        <h2> Welcome {{name}}</h2> 
+                
+               
+                
+                    
+            <!-- <div class="navbar navbar-light" style="display: inline-block;">
+                <div style="text-align:right; margin:0px auto 0px auto;display: inline-block;"> -->
+                   
+                <!-- </div>
+            </div> -->
+        
+            <div class="pos-f-t">
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="bg-primary p-4" >
+                        <h4 class="text-white"><p>{{current_user_role}}</p></h4>
+                        <span class="text-muted">{% for r in roles %}
+                            {% if r.name == current_user_role %}
+                            <!-- <p>{{privileged}}</p> -->
+                            <a class="btn btn-danger" href="sinup/" role="button">👤 Create User</a>
+                            
+                            <a class="btn btn-danger" href="create_permission/" role="button">👤 Create permission</a>
+                            
+                            <a class="btn btn-danger" href="create_role/" role="button">👤 Create Role</a>
+                            
+                    
+                            <a class="btn btn-danger" href="list_view_role/"  role="button">👤 View Role</a>
+                            
+                            <a class="btn btn-danger" href="list_view_leave/"  role="button">👤 View leave type</a>
+                            
+                            <a class="btn btn-danger" href="leave/" role="button">👤 check Leave</a>
+                            
+                        
+                            
+                            {% endif%}
+                            {% endfor %}
+                            {% if show_leave == "yes" %}
+                            <a class="btn btn-danger" href="leave/" role="button">👤 apply leave</a>
+                            
+                            {% endif%}
+                        </span>
+                    </div>
+                </div>
+                <nav class="navbar navbar-dark bg-dark">
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                </nav>
+              </div>
+        </div>
+    <div>
+</div>
+
+
+    <div class="col">
+        <div class="border">
+            <!-- {{ todos }} -->
+            <!-- single queryset print -->
+
+
+            <!-- {% for todo in todos %}
+            {{ todo.title }}
+            {% endfor %} -->
+            <!-- for loop in todo list -->
+            {% if Uprofile|length == 0%}
+            <div class="p-4">
+                <br>
+                <br>
+                <div class="alert alert-info">
+                    <p class="dispaly-4">NO User</p>
+                </div>
+                <br>
+                <br>
+            </div>
+            {% else %}
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                            {%for r in roles%}
+                            {% if r.name == current_user_role %}
+                            <th>Function</th>
+                            {% endif%}
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        {% for up in Uprofile %}
+                        <tr>
+                            <td>{{forloop.counter}} </td>
+                            <td>{{up.profile_user.first_name}} </td>
+                            <td>{{up.role}} </td>
+                            <td>{{up.departmant}} </td>
+                            
+                            <td>{% if up.profile_user.is_active == True %}
+                                <h6>Enabled</h6>
+                                {% else %}
+                                <h6>disabled</h6>
+                                {% endif %}
+
+                                
+                            
+                            
+                            </td>
+
+                            
+                            <td>
+                                {% if up.profile_user.is_active %}
+                                <a href="Inactive/{{up.profile_user.id}}" title="Deactivate" class="">
+                                    ❎</a>
+                                {% else %}
+                                 <a href="active/{{up.profile_user.id}}"title="Activate" class="">
+
+                                     ✅</a>
+
+                                     {% endif %}
+
+                                
+                            </td>
+                            <td>
+                        {%for r in roles%}
+                     {% if r.name == current_user_role %}
+                <a href="update/{{up.profile_user.id}}" title="Mark Completed " class="">
+                👤 update user</a>
+                <a href="update_role/{{up.role.id}}" title="Mark Completed " class="">
+                    👤 update role</a>
+
+                    {% endif%}
+                    {% endfor %}
+                            </td>
+                           
+                            
+                            
+                        </tr>
+                        
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            {% endif%}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

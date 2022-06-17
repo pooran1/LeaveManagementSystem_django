@@ -1,0 +1,25 @@
+<div>
+    <p>{{current_user_role}}</p>
+      <!-- {% if user.is_authenticated %} -->
+      {%for r in roles%}
+      {% if r.name == current_user_role %}
+      <!-- <p>{{privileged}}</p> -->
+      <a href="sinup/" title="Mark Completed " class="">
+          👤 Create User</a>
+    
+
+      <a href="create_permission/" title="Mark Completed " class="">
+              👤 Create Role</a>
+              <a href="create_role/" title="Mark Completed " class="">
+                  👤 Create Role</a>
+        
+      {% endif%}
+      {% endfor %}
+      
+     
+      <!-- {% endif %} -->
+      
+      
+
+
+  </div>
